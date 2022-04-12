@@ -25,10 +25,10 @@ jobs:
 
       # sam deploy
       - run: |
-          sam deploy --no-confirm-changeset \ 
-          --no-fail-on-empty-changeset \ 
-          --s3-bucket stb-deployment \ 
-          --stack-name stb-authentication-dev \ 
-          --parameter-overrides Stage=dev \ 
-          --capabilities CAPABILITY_IAM \ 
+          sam deploy --no-confirm-changeset \
+          --no-fail-on-empty-changeset \
+          --s3-bucket stb-deployment \
+          --stack-name stb-authentication-dev \
+          --parameter-overrides Stage=dev \
+          --capabilities CAPABILITY_IAM \
           --region ${{ secrets.AWS_REGION }}
