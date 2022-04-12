@@ -3,6 +3,12 @@ Transform: AWS::Serverless-2016-10-31
 Description: Authentication API
 
 Parameters:
+  Project:
+    Type: String
+    Default: stb
+  Application:
+    Type: String
+    Default: authentication
   Stage:
     Type: String
     Default: dev
@@ -15,11 +21,13 @@ Resources:
   AuthApiGateway:
     Type: AWS::Serverless::Api
     Properties:
+      Name: !Join ["", [{"Ref": "Project"}, "_", {"Ref": "Application"}, "_", {"Ref": "environment"}]]
       StageName: !Ref Stage
   SignUpFunction:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: stb-auth-api-signup
+      FunctionName: !Join ["", [{"Ref": "Project"}, "_", {"Ref": "Application"}, "_", "signup"]]
       CodeUri: sign_up/lambda
       Handler: app.lambda_handler
       Runtime: python3.9
@@ -35,12 +43,9 @@ Resources:
               Ref: AuthApiGateway
 
 Outputs:
-  SignUpApiDev:
-    Description: "API Gateway endpoint URL for dev stage for Sign Up function"
-    Value: !Sub "https://${AuthApiGateway}.execute-api.${AWS::Region}.amazonaws.com/dev/"
-  SignUpApiProd:
-    Description: "API Gateway endpoint URL for prod stage for Sign Up function"
-    Value: !Sub "https://${AuthApiGateway}.execute-api.${AWS::Region}.amazonaws.com/prod/"
+  SignUpApi:
+    Description: "API Gateway endpoint URL for stage for Sign Up function"
+    Value: !Sub "https://${AuthApiGateway}.execute-api.${AWS::Region}.amazonaws.com/"
   SignUpFunction:
     Description: "Sign Up Lambda Function ARN"
     Value: !GetAtt SignUpFunction.Arn
