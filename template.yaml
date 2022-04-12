@@ -15,10 +15,11 @@ Resources:
   AuthApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      StageName: dev
+      StageName: !Ref Stage
   SignUpFunction:
     Type: AWS::Serverless::Function
     Properties:
+      FunctionName: stb-auth-api-signup
       CodeUri: sign_up/lambda
       Handler: app.lambda_handler
       Runtime: python3.9
@@ -34,9 +35,12 @@ Resources:
               Ref: AuthApiGateway
 
 Outputs:
-  SignUpApi:
+  SignUpApiDev:
     Description: "API Gateway endpoint URL for dev stage for Sign Up function"
     Value: !Sub "https://${AuthApiGateway}.execute-api.${AWS::Region}.amazonaws.com/dev/"
+  SignUpApiProd:
+    Description: "API Gateway endpoint URL for prod stage for Sign Up function"
+    Value: !Sub "https://${AuthApiGateway}.execute-api.${AWS::Region}.amazonaws.com/prod/"
   SignUpFunction:
     Description: "Sign Up Lambda Function ARN"
     Value: !GetAtt SignUpFunction.Arn
