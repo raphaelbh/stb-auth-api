@@ -2,6 +2,11 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Authentication API
 
+Parameters:
+  Stage:
+    Type: String
+    Default: dev
+
 Globals:
   Function:
     Timeout: 3
@@ -24,8 +29,8 @@ Resources:
 
 Outputs:
   SignUpApi:
-    Description: "API Gateway endpoint URL for Prod stage for Sign Up function"
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+    Description: "API Gateway endpoint URL for dev stage for Sign Up function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/"
   SignUpFunction:
     Description: "Sign Up Lambda Function ARN"
     Value: !GetAtt SignUpFunction.Arn
