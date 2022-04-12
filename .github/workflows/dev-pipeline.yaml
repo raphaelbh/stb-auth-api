@@ -1,4 +1,4 @@
-name: Authentication API
+name: Authentication API - Dev Workflow
 
 on:
   push:
