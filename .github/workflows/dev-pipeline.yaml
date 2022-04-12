@@ -22,7 +22,7 @@ jobs:
       # sam build 
       - run: sam build --use-container
 
-      # Run Unit tests- Specify unit tests here
+      # run unit tests
 
       # sam deploy
       - run: |
