@@ -21,7 +21,7 @@ Resources:
   AuthApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      Name: !Join ["", [{"Ref": "Project"}, "_", {"Ref": "Application"}, "_", {"Ref": "environment"}]]
+      Name: !Join ["", [{"Ref": "Project"}, "_", {"Ref": "Application"}, "_", {"Ref": "Stage"}]]
       StageName: !Ref Stage
   SignUpFunction:
     Type: AWS::Serverless::Function
