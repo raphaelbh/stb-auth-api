@@ -24,3 +24,5 @@ jobs:
           --parameter-overrides Stage=prod \
           --capabilities CAPABILITY_IAM \
           --region ${{ secrets.AWS_REGION }}
+      - run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+      - run: echo ${{ steps.vars.outputs.short_ref }}
