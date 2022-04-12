@@ -21,13 +21,12 @@ Resources:
   AuthApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      Name: !Join ["", [{"Ref": "Project"}, "_", {"Ref": "Application"}, "_", {"Ref": "Stage"}]]
+      Name: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
       StageName: !Ref Stage
   SignUpFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: stb-auth-api-signup
-      FunctionName: !Join ["", [{"Ref": "Project"}, "_", {"Ref": "Application"}, "_", "signup"]]
+      FunctionName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "signup"]]
       CodeUri: sign_up/lambda
       Handler: app.lambda_handler
       Runtime: python3.9
