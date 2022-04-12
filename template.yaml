@@ -1,0 +1,34 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Authentication API
+
+Globals:
+  Function:
+    Timeout: 3
+
+Resources:
+  SignUpFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: sign_up/lambda
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Architectures:
+        - x86_64
+      Events:
+        SignUp:
+          Type: Api
+          Properties:
+            Path: /signup
+            Method: get
+
+Outputs:
+  SignUpApi:
+    Description: "API Gateway endpoint URL for Prod stage for Sign Up function"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/hello/"
+  SignUpFunction:
+    Description: "Sign Up Lambda Function ARN"
+    Value: !GetAtt SignUpFunction.Arn
+  SignUpFunctionIamRole:
+    Description: "Implicit IAM Role created for Sign Up function"
+    Value: !GetAtt SignUpFunctionRole.Arn
