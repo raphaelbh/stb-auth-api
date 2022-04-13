@@ -12,6 +12,14 @@ Parameters:
   Stage:
     Type: String
     Default: dev
+  LogRetentionInDays:
+    Type: Number
+    Default: 2
+
+provider:
+  name: aws
+  runtime: python3.9
+  logRetentionInDays: !Ref LogRetentionInDays
 
 Globals:
   Function:
