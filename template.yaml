@@ -47,11 +47,11 @@ Resources:
             Method: get
             RestApiId:
               Ref: AuthApiGateway
-  LogGroup:
-    Type: AWS::Logs::LogGroup
-    Properties:
-      LogGroupName: !Sub "/aws/lambda/${SignUpFunction}"
-      RetentionInDays: !Ref LogRetentionInDays
+#  LogGroup:
+#    Type: AWS::Logs::LogGroup
+#    Properties:
+#      LogGroupName: !Sub "/aws/lambda/${SignUpFunction}"
+#      RetentionInDays: !Ref LogRetentionInDays
 
 
 Outputs:
