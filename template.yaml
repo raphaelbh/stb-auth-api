@@ -26,6 +26,7 @@ Resources:
       Name: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
       StageName: !Ref Stage
       Auth:
+        ApiKeyRequired: true
         UsagePlan:
           UsagePlanName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
           CreateUsagePlan: PER_API
