@@ -47,7 +47,7 @@ Resources:
           Type: Api
           Properties:
             Path: /signup
-            Method: get
+            Method: post
             RestApiId:
               Ref: AuthApiGateway
 
