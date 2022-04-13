@@ -27,7 +27,7 @@ Resources:
       StageName: !Ref Stage
       Auth:
         UsagePlan:
-          UsagePlanName: ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
+          UsagePlanName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
           CreateUsagePlan: PER_API
           Quota: 
             Limit: 5
