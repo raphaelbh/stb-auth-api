@@ -16,21 +16,20 @@ Parameters:
     Type: Number
     Default: 2
 
-provider:
-  name: aws
-  runtime: python3.9
-  logRetentionInDays: !Ref LogRetentionInDays
-
 Globals:
   Function:
     Timeout: 3
 
 Resources:
+
+  # Auth Api Gateway
   AuthApiGateway:
     Type: AWS::Serverless::Api
     Properties:
       Name: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
       StageName: !Ref Stage
+
+  # Sign Up Function
   SignUpFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -48,6 +47,12 @@ Resources:
             Method: get
             RestApiId:
               Ref: AuthApiGateway
+  LogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub "/aws/lambda/${SignUpFunction}"
+      RetentionInDays: !Ref LogRetentionInDays
+
 
 Outputs:
   SignUpApi:
