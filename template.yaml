@@ -12,6 +12,9 @@ Parameters:
   Stage:
     Type: String
     Default: dev
+  QuotaLimit:
+    Type: Number
+    Default: 1000
 
 Globals:
   Function:
@@ -31,7 +34,7 @@ Resources:
           UsagePlanName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
           CreateUsagePlan: PER_API
           Quota: 
-            Limit: 5
+            Limit: !Ref QuotaLimit
             Period: DAY
 
   # Sign Up Function
