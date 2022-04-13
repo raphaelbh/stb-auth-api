@@ -44,12 +44,10 @@ Resources:
             Method: get
             RestApiId:
               Ref: AuthApiGateway
-  # Explicit log group that refers to the Lambda function
   LogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
       LogGroupName: !Sub "/aws/lambda/${SignUpFunction}"
-      # Explicit retention time
       RetentionInDays: 7
 
 Outputs:
