@@ -51,7 +51,7 @@ Resources:
     Type: AWS::Logs::LogGroup
     Properties:
       LogGroupName: !Sub "/aws/lambda/${SignUpFunction}"
-      RetentionInDays: !Ref LogRetentionInDays
+      RetentionInDays: 2
 
 
 Outputs:
