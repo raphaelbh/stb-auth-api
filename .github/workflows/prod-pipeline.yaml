@@ -32,6 +32,6 @@ jobs:
           --no-fail-on-empty-changeset \
           --s3-bucket stb-deployment \
           --stack-name stb-authentication-prod \
-          --parameter-overrides Stage=prod,LogRetentionInDays=30 \
+          --parameter-overrides Stage=prod \
           --capabilities CAPABILITY_IAM \
           --region ${{ secrets.AWS_REGION }}

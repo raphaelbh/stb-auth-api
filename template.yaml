@@ -12,9 +12,6 @@ Parameters:
   Stage:
     Type: String
     Default: dev
-  LogRetentionInDays:
-    Type: Number
-    Default: 2
 
 Globals:
   Function:
