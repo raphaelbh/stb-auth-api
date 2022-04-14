@@ -9,6 +9,7 @@ Application responsible for providing security for the APIs of the STB project.
 Features:
 - sign up
 - login
+- logout
 
 
 ## Requirements
