@@ -42,8 +42,8 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       FunctionName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "signup", "-", {"Ref": "Stage"}]]
-      CodeUri: application/sign-up
-      Handler: index.lambda_handler
+      CodeUri: application/signup
+      Handler: app.lambda_handler
       Runtime: python3.9
       Events:
         SignUpEvent:
