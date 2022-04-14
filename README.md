@@ -7,57 +7,41 @@ Application responsible for providing security for the APIs of the STB project.
 ![resources](assets/images/resources.png)
 
 Features:
-- sign up
-- login
-- logout
+- user sign up
+- user login
+- user logout
+- user delete
 
 
 ## Requirements
 
-[![docker](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+- [aws sam cli](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 
 
 ## Installation
-
-(IN PROGRESS)
-
-```bash
-$ docker-compose up --build
-```
-
-
-## Run Locally
 ```bash
 $ sam local start-api
-$ curl http://localhost:3000/
 ```
 
 
 ## Usage
 
-(IN PROGRESS)
-
 ```bash
 # sign up
-$ curl -X POST http://localhost/signup
-
-# sign up
-$ curl -X POST http://localhost/login
+$ curl -X POST http://localhost:3000/signup
 ```
 
 
 ## Running Tests
 
-(IN PROGRESS)
-
 ```bash
-$ pytest --cov=app tests/
+$ export PYTHONPATH=application
+$ pytest --cache-clear --cov-fail-under=90 --cov=application tests/
 ```
 
 
 ## Tech Stack
 
-[![docker](https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)](https://www.python.org/)
 [![aws](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com/)
 
