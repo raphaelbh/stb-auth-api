@@ -35,3 +35,8 @@ jobs:
           --parameter-overrides Stage=prod,QuotaLimit=2000 \
           --capabilities CAPABILITY_IAM \
           --region ${{ secrets.AWS_REGION }}
+      
+      - name: Tag application 
+        uses: anothrNick/github-tag-action@1.38.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
