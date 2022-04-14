@@ -19,6 +19,7 @@ Features:
 
 
 ## Installation
+
 ```bash
 $ sam local start-api
 ```
@@ -47,6 +48,7 @@ $ pytest --cache-clear --cov-fail-under=90 --cov=application tests/
 
 
 ## Reference
+
 - https://aws.amazon.com/blogs/compute/using-github-actions-to-deploy-serverless-applications/
 - https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-api.html
 - https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html
