@@ -22,7 +22,7 @@ Globals:
 
 Resources:
 
-  # Auth Api Gateway
+  # --- Auth Api Gateway
   AuthApiGateway:
     Type: AWS::Serverless::Api
     Properties:
@@ -37,7 +37,7 @@ Resources:
             Limit: !Ref QuotaLimit
             Period: DAY
 
-  # Sign Up Function
+  # --- Sign Up Function
   SignUpFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -53,6 +53,25 @@ Resources:
             Method: post
             RestApiId:
               Ref: AuthApiGateway
+  
+  # --- Cognito
+  CognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "signup", "-", {"Ref": "Stage"}]]
+      AutoVerifiedAttributes:
+        - email
+      UsernameAttributes:
+        - email
+
+  CognitoUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "signup", "-", {"Ref": "Stage"}]]
+      ExplicitAuthFlows:
+        - ALLOW_USER_PASSWORD_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+      UserPoolId: !Ref CognitoUserPool
 
 Outputs:
   SignUpApi:
