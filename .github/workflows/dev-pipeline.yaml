@@ -29,22 +29,13 @@ jobs:
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-      - name: Install test dependencies
+      - name: Check unit tests and coverage
         run: |
           pip install pytest
           pip install pytest-cov
-
-      - name: Check unit tests and coverage
-        run: |
           export PYTHONPATH=application
           pytest --cache-clear --cov-fail-under=90 --cov=application tests/unit/
-
-      - name: Run integration tests
-        run: |
-          sam local start-api
-          export PYTHONPATH=application
-          pytest --cache-clear --cov-fail-under=90 --cov=application tests/integration/
-
+      
       - name: Setup sam client
         uses: aws-actions/setup-sam@v1
       
