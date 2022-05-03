@@ -14,11 +14,7 @@ Parameters:
     Default: dev
   QuotaLimit:
     Type: Number
-    Default: 1000
-
-Globals:
-  Function:
-    Timeout: 5
+    Default: 500
 
 Resources:
 
@@ -58,16 +54,13 @@ Resources:
   CognitoUserPool:
     Type: AWS::Cognito::UserPool
     Properties:
-      UserPoolName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "signup", "-", {"Ref": "Stage"}]]
-      AutoVerifiedAttributes:
-        - email
+      UserPoolName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
       UsernameAttributes:
         - email
-
   CognitoUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
-      ClientName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "signup", "-", {"Ref": "Stage"}]]
+      ClientName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
       ExplicitAuthFlows:
         - ALLOW_USER_PASSWORD_AUTH
         - ALLOW_REFRESH_TOKEN_AUTH
@@ -83,3 +76,9 @@ Outputs:
   SignUpFunctionIamRole:
     Description: "Implicit IAM Role created for Sign Up function"
     Value: !GetAtt SignUpFunctionRole.Arn
+  CognitoUserPoolId:
+    Description: "Cognito User Pool ID"
+    Value: !Ref CognitoUserPool
+  CognitoUserPoolClientId:
+    Description: "Cognito User Pool Client ID"
+    Value: !Ref CognitoUserPoolClient
