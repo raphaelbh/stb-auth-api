@@ -1,0 +1,23 @@
+name: Integration Tests
+
+on: [workflow_dispatch]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      
+      - name: Checkout application 
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+
+      - name: Install newman
+        run: npm install -g newman
+      
+      - name: Run integration tests
+        run: |
+          newman run postman/collection/stb-authentication.postman_collection.json \
+          -e postman/environment/development.postman_environment.json \
+          --env-var "api_key=${{ secrets.AWS_API_KEY_DEV }}"
