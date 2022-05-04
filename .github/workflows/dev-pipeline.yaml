@@ -39,13 +39,6 @@ jobs:
       - name: Setup sam client
         uses: aws-actions/setup-sam@v1
       
-      - name: Check integartion tests
-        run: |
-          pip install -r tests/requirements.txt
-          sam local start-api  > /dev/null 2>&1 &
-          export PYTHONPATH=application
-          pytest --cache-clear --cov-fail-under=90 --cov=application tests/integration
-
       - name: Configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
