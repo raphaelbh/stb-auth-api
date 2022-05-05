@@ -59,7 +59,7 @@ Resources:
       Runtime: python3.9
       Environment:
         Variables:
-          AWS_REGION: !Ref AWS::Region
+          REGION: !Ref AWS::Region
           USER_POOL_ID: !Ref CognitoUserPool
           USER_POOL_CLIENT_ID: !Ref CognitoUserPoolClient
       Events:
