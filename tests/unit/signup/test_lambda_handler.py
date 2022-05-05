@@ -1,29 +1,60 @@
 import json
-import pytest
+import unittest
 
+from unittest.mock import patch
 from application.signup import app
 
 
-@pytest.fixture()
-def apigw_event():
-    body = json.dumps({
-        "username": "raphaeldias.ti@gmail.com",
-        "password": "Mudar@123",
-        "attributes": [{
-            "Name": "name",
-            "Value": "Raphael Oliveira"
-        }, {
-            "Name": "email",
-            "Value": "raphaeldias.ti@gmail.com"
-        }]
-    })
-    return {
-        "body": body,
-        "resource": "/signup",
-        "httpMethod": "POST"
-    }
+class MyTestCase(unittest.TestCase):
+
+    @patch('boto3.client')
+    def test_lambda_handler_success(self, mock_boto_client):
+
+        body = json.dumps({
+            "username": "raphaeldias.ti@gmail.com",
+            "password": "Mudar@123",
+            "attributes": [{
+                "Name": "name",
+                "Value": "Raphael Oliveira"
+            }, {
+                "Name": "email",
+                "Value": "raphaeldias.ti@gmail.com"
+            }]
+        })
+        apigw_event = {
+            "body": body,
+            "resource": "/signup",
+            "httpMethod": "POST"
+        }
+
+        response = app.lambda_handler(apigw_event, "")
+        assert response["statusCode"] == 201
+
+    @patch('boto3.client')
+    def test_lambda_handler_error(self, mock_boto_client):
+
+        mock_boto_client.side_effect = Exception('Error')
+
+        body = json.dumps({
+            "username": "raphaeldias.ti@gmail.com",
+            "password": "Mudar@123",
+            "attributes": [{
+                "Name": "name",
+                "Value": "Raphael Oliveira"
+            }, {
+                "Name": "email",
+                "Value": "raphaeldias.ti@gmail.com"
+            }]
+        })
+        apigw_event = {
+            "body": body,
+            "resource": "/signup",
+            "httpMethod": "POST"
+        }
+
+        response = app.lambda_handler(apigw_event, "")
+        assert response["statusCode"] == 500
 
 
-def test_lambda_handler_success(apigw_event):
-    response = app.lambda_handler(apigw_event, "")
-    assert response["statusCode"] == 201
+if __name__ == '__main__':
+    unittest.main()

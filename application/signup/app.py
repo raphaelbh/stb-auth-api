@@ -4,13 +4,8 @@ import json
 import boto3
 
 
-AWS_REGION = os.environ.get("AWS_REGION")
-USER_POOL_ID = os.environ.get("USER_POOL_ID")
-USER_POOL_CLIENT_ID = os.environ.get("USER_POOL_CLIENT_ID")
-
-cognito_idp = boto3.client('cognito-idp', region_name=AWS_REGION)
-
 def lambda_handler(event, context):
+
     user = json.loads(event['body'])
     try:
         _sign_up(user)
@@ -18,7 +13,7 @@ def lambda_handler(event, context):
         return {
             "statusCode": 201
         }
-    except:
+    except Exception:
         e = sys.exc_info()[1]
         body = json.dumps({
             "message": "Sign up error",
@@ -32,16 +27,31 @@ def lambda_handler(event, context):
             "body": body
         }
 
+
+def _get_cognito_client():
+    AWS_REGION = os.environ.get("AWS_REGION")
+    return boto3.client('cognito-idp', region_name=AWS_REGION)
+
+
 def _sign_up(user):
+
+    USER_POOL_CLIENT_ID = os.environ.get("USER_POOL_CLIENT_ID")
+
+    cognito_idp = _get_cognito_client()
     cognito_idp.sign_up(
-        ClientId = USER_POOL_CLIENT_ID,
-        Username = user['username'],
-        Password = user['password'],
-        UserAttributes = user['attributes']
+        ClientId=USER_POOL_CLIENT_ID,
+        Username=user['username'],
+        Password=user['password'],
+        UserAttributes=user['attributes']
     )
 
+
 def _admin_confirm_sign_up(user):
+
+    USER_POOL_ID = os.environ.get("USER_POOL_ID")
+
+    cognito_idp = _get_cognito_client()
     cognito_idp.admin_confirm_sign_up(
-        UserPoolId = USER_POOL_ID,
-        Username = user['username']
+        UserPoolId=USER_POOL_ID,
+        Username=user['username']
     )
