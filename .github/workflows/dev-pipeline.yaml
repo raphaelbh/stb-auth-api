@@ -33,6 +33,7 @@ jobs:
         run: |
           pip install pytest
           pip install pytest-cov
+          pip install -r tests/requirements.txt
           export PYTHONPATH=application
           pytest --cache-clear --cov-fail-under=90 --cov=application tests/unit
       
