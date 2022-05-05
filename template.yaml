@@ -18,6 +18,22 @@ Parameters:
 
 Resources:
 
+  # --- Cognito
+  CognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
+      UsernameAttributes:
+        - email
+  CognitoUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
+      ExplicitAuthFlows:
+        - ALLOW_USER_PASSWORD_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+      UserPoolId: !Ref CognitoUserPool
+
   # --- Auth Api Gateway
   AuthApiGateway:
     Type: AWS::Serverless::Api
@@ -41,6 +57,11 @@ Resources:
       CodeUri: application/signup
       Handler: app.lambda_handler
       Runtime: python3.9
+      Environment:
+        Variables:
+          AWS_REGION: !Ref AWS::Region
+          USER_POOL_ID: !Ref CognitoUserPool
+          USER_POOL_CLIENT_ID: !Ref CognitoUserPoolClient
       Events:
         SignUpEvent:
           Type: Api
@@ -49,22 +70,6 @@ Resources:
             Method: post
             RestApiId:
               Ref: AuthApiGateway
-  
-  # --- Cognito
-  CognitoUserPool:
-    Type: AWS::Cognito::UserPool
-    Properties:
-      UserPoolName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
-      UsernameAttributes:
-        - email
-  CognitoUserPoolClient:
-    Type: AWS::Cognito::UserPoolClient
-    Properties:
-      ClientName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
-      ExplicitAuthFlows:
-        - ALLOW_USER_PASSWORD_AUTH
-        - ALLOW_REFRESH_TOKEN_AUTH
-      UserPoolId: !Ref CognitoUserPool
 
 Outputs:
   SignUpApi:
