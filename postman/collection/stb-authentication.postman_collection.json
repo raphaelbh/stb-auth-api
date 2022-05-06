@@ -25,7 +25,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"username\": \"raphaeldias.ti@gmail.com\",\n    \"password\": \"Mudar@123\",\n    \"attributes\": [{\n        \"Name\": \"name\",\n        \"Value\": \"Raphael Oliveira\"\n    }, {\n        \"Name\": \"email\",\n        \"Value\": \"raphaeldias.ti@gmail.com\"\n    }]\n}",
+					"raw": "{\n    \"username\": \"raphaeldias.ti+testing@gmail.com\",\n    \"password\": \"Mudar@123\",\n    \"attributes\": [{\n        \"Name\": \"name\",\n        \"Value\": \"Raphael Oliveira\"\n    }, {\n        \"Name\": \"email\",\n        \"Value\": \"raphaeldias.ti@gmail.com\"\n    }]\n}",
 					"options": {
 						"raw": {
 							"language": "json"
