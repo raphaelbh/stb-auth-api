@@ -33,27 +33,7 @@ Resources:
         - ALLOW_USER_PASSWORD_AUTH
         - ALLOW_REFRESH_TOKEN_AUTH
       UserPoolId: !Ref CognitoUserPool
-  CognitoRole:
-    Type: "AWS::IAM::Role"
-    Properties:
-      AssumeRolePolicyDocument: 
-        Version: "2012-10-17"
-        Statement:
-          - Effect: "Allow"
-            Principal: 
-              Service: 
-                - "cognito-idp.amazonaws.com"
-            Action: 
-              - "sts:AssumeRole"
-      Policies:
-        - PolicyName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "cognito-role", "-", {"Ref": "Stage"}]]
-          PolicyDocument: 
-            Version: "2012-10-17"
-            Statement: 
-              - Effect: "Allow"
-                Action: "cognito-idp:AdminConfirmSignUp"
-                Resource: "*"
-
+  
   # --- Auth Api Gateway
   AuthApiGateway:
     Type: AWS::Serverless::Api
@@ -77,6 +57,12 @@ Resources:
       CodeUri: application/signup
       Handler: app.lambda_handler
       Runtime: python3.9
+      Policies:
+        - Statement:
+            - Effect: Allow
+              Action:
+                - cognito-idp:AdminConfirmSignUp
+              Resource: !GetAtt CognitoUserPool.Arn
       Environment:
         Variables:
           USER_POOL_ID: !Ref CognitoUserPool
