@@ -52,7 +52,7 @@ Resources:
             Statement: 
               - Effect: "Allow"
                 Action: "cognito-idp:AdminConfirmSignUp"
-                Resource: !Ref CognitoUserPool
+                Resource: "*"
 
   # --- Auth Api Gateway
   AuthApiGateway:
