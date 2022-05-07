@@ -46,7 +46,7 @@ Resources:
             Action: 
               - "sts:AssumeRole"
       Policies:
-        - PolicyName: Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "cognito-role", "-", {"Ref": "Stage"}]]
+        - PolicyName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "cognito-role", "-", {"Ref": "Stage"}]]
           PolicyDocument: 
             Version: "2012-10-17"
             Statement: 
