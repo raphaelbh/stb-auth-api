@@ -30,6 +30,7 @@ def lambda_handler(event, context):
 def _sign_up(user):
 
     AWS_REGION = os.environ.get("AWS_REGION")
+    USER_POOL_ID = os.environ.get("USER_POOL_ID")
     USER_POOL_CLIENT_ID = os.environ.get("USER_POOL_CLIENT_ID")
 
     cognito_idp = boto3.client('cognito-idp', region_name=AWS_REGION)
@@ -39,4 +40,9 @@ def _sign_up(user):
         Username=user['username'],
         Password=user['password'],
         UserAttributes=user['attributes']
+    )
+
+    cognito_idp.admin_confirm_sign_up(
+        UserPoolId = USER_POOL_ID,
+        Username = user['username']
     )
