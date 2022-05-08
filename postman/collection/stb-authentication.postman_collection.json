@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "api key validation",
+			"name": "no api-key",
 			"event": [
 				{
 					"listen": "test",
@@ -26,6 +26,54 @@
 				},
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"raphaeldias.ti+testing@gmail.com\",\n    \"password\": \"Mudar@123\",\n    \"attributes\": [{\n        \"Name\": \"name\",\n        \"Value\": \"Raphael Oliveira\"\n    }, {\n        \"Name\": \"email\",\n        \"Value\": \"raphaeldias.ti+testing@gmail.com\"\n    }]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/signup",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "invalid api-key",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 403\", function () {",
+							"  pm.response.to.have.status(403);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-api-key",
+						"value": "invalid-api-key",
+						"type": "text"
+					}
+				],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n    \"username\": \"raphaeldias.ti+testing@gmail.com\",\n    \"password\": \"Mudar@123\",\n    \"attributes\": [{\n        \"Name\": \"name\",\n        \"Value\": \"Raphael Oliveira\"\n    }, {\n        \"Name\": \"email\",\n        \"Value\": \"raphaeldias.ti+testing@gmail.com\"\n    }]\n}",
@@ -101,6 +149,9 @@
 							"  pm.expect(responseJson.refresh_token).to.be.not.empty;",
 							"  pm.expect(responseJson.id_token).to.be.not.empty;",
 							"  pm.expect(responseJson.expires_in).to.eql(3600);",
+							"",
+							"  pm.collectionVariables.set(\"id_token\", responseJson.id_token);",
+							"  pm.collectionVariables.set(\"access_token\", responseJson.access_token);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -126,6 +177,77 @@
 					],
 					"path": [
 						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "unauthorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 401\", function () {",
+							"  pm.response.to.have.status(401);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{host}}/delete",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"delete"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"  pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{id_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Access-Token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/delete",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"delete"
 					]
 				}
 			},
@@ -165,6 +287,18 @@
 					""
 				]
 			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
 		}
 	]
 }
