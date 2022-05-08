@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "no api-key",
+			"name": "user signup: no api-key",
 			"event": [
 				{
 					"listen": "test",
@@ -48,7 +48,7 @@
 			"response": []
 		},
 		{
-			"name": "invalid api-key",
+			"name": "user signup: invalid api-key",
 			"event": [
 				{
 					"listen": "test",
@@ -96,7 +96,7 @@
 			"response": []
 		},
 		{
-			"name": "user signup",
+			"name": "user signup: success",
 			"event": [
 				{
 					"listen": "test",
@@ -135,7 +135,86 @@
 			"response": []
 		},
 		{
-			"name": "user login",
+			"name": "user logout: invalid access_token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"  pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{id_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Access-Token",
+						"value": "eyJraWQiOiJJeW...",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/users/logout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user logout: unauthorized",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"  pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Access-Token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/users/logout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user login: success",
 			"event": [
 				{
 					"listen": "test",
@@ -184,7 +263,139 @@
 			"response": []
 		},
 		{
-			"name": "unauthorized",
+			"name": "user logout: success",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"  pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{id_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Access-Token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/users/logout",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user delete: revoked acces_token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"  pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{id_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Access-Token",
+						"value": "{{access_token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user login: success [2]",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"",
+							"  const responseJson = pm.response.json();",
+							"  pm.expect(responseJson.access_token).to.be.not.empty;",
+							"  pm.expect(responseJson.refresh_token).to.be.not.empty;",
+							"  pm.expect(responseJson.id_token).to.be.not.empty;",
+							"  pm.expect(responseJson.expires_in).to.eql(3600);",
+							"",
+							"  pm.collectionVariables.set(\"id_token\", responseJson.id_token);",
+							"  pm.collectionVariables.set(\"access_token\", responseJson.access_token);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"raphaeldias.ti+testing@gmail.com\",\n    \"password\": \"Mudar@123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/users/login",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user delete: unauthorized",
 			"event": [
 				{
 					"listen": "test",
@@ -214,7 +425,48 @@
 			"response": []
 		},
 		{
-			"name": "user delete",
+			"name": "user delete: invalid access_token",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 500\", function () {",
+							"  pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{id_token}}",
+						"type": "text"
+					},
+					{
+						"key": "Access-Token",
+						"value": "eyJraWQiOiJJeW...",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/users",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "user delete: success [2]",
 			"event": [
 				{
 					"listen": "test",

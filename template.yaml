@@ -30,7 +30,14 @@ Resources:
         - ALLOW_USER_PASSWORD_AUTH
         - ALLOW_REFRESH_TOKEN_AUTH
       UserPoolId: !Ref CognitoUserPool
-  
+      IdTokenValidity: 5
+      AccessTokenValidity: 5 
+      RefreshTokenValidity: 1
+      TokenValidityUnits:
+        AccessToken: minutes
+        IdToken: minutes
+        RefreshToken: days
+
   # --- Auth Api Gateway
   AuthApiGateway:
     Type: AWS::Serverless::Api
@@ -96,6 +103,25 @@ Resources:
             RestApiId:
               Ref: AuthApiGateway
 
+  # --- Logout Function
+  LogoutFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Join ["", [{"Ref": "Application"}, "-", "logout", "-", {"Ref": "Stage"}]]
+      CodeUri: application/logout
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Events:
+        LogoutEvent:
+          Type: Api
+          Properties:
+            Path: /users/logout
+            Method: post
+            RestApiId:
+              Ref: AuthApiGateway
+            Auth:
+              Authorizer: CognitoAuthorizer
+
   # --- Delete Function
   DeleteFunction:
     Type: AWS::Serverless::Function
@@ -105,7 +131,7 @@ Resources:
       Handler: app.lambda_handler
       Runtime: python3.9
       Events:
-        SignUpEvent:
+        DeleteEvent:
           Type: Api
           Properties:
             Path: /users

@@ -26,7 +26,7 @@ class LoginTestCase(unittest.TestCase):
         })
         apigw_event = {
             "body": body,
-            "resource": "/login",
+            "resource": "/users/login",
             "httpMethod": "POST"
         }
 
@@ -44,7 +44,7 @@ class LoginTestCase(unittest.TestCase):
         })
         apigw_event = {
             "body": body,
-            "resource": "/login",
+            "resource": "/users/login",
             "httpMethod": "POST"
         }
 

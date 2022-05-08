@@ -1,17 +1,17 @@
 import unittest
 
 from unittest.mock import patch
-from application.delete import app
+from application.logout import app
 
 
-class DeleteTestCase(unittest.TestCase):
+class LogoutTestCase(unittest.TestCase):
 
     @patch('boto3.client')
     def test_lambda_handler_success(self, mock_boto_client):
 
         apigw_event = {
-            "resource": "/users",
-            "httpMethod": "DELETE",
+            "resource": "/users/logout",
+            "httpMethod": "POST",
             "headers": {
                 "Access-Token": "eyJraWQiOiJJeW..."
             }
@@ -26,8 +26,8 @@ class DeleteTestCase(unittest.TestCase):
         mock_boto_client.side_effect = Exception('Error')
 
         apigw_event = {
-            "resource": "/users",
-            "httpMethod": "DELETE",
+            "resource": "/users/logout",
+            "httpMethod": "POST",
             "headers": {
                 "Access-Token": "eyJraWQiOiJJeW..."
             }
