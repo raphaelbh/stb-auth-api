@@ -141,8 +141,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 500\", function () {",
-							"  pm.response.to.have.status(500);",
+							"pm.test(\"Status code is 401\", function () {",
+							"  pm.response.to.have.status(401);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -183,8 +183,8 @@
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status code is 204\", function () {",
-							"  pm.response.to.have.status(204);",
+							"pm.test(\"Status code is 401\", function () {",
+							"  pm.response.to.have.status(401);",
 							"});"
 						],
 						"type": "text/javascript"
@@ -227,7 +227,7 @@
 							"  pm.expect(responseJson.access_token).to.be.not.empty;",
 							"  pm.expect(responseJson.refresh_token).to.be.not.empty;",
 							"  pm.expect(responseJson.id_token).to.be.not.empty;",
-							"  pm.expect(responseJson.expires_in).to.eql(3600);",
+							"  pm.expect(responseJson.expires_in).to.eql(300);",
 							"",
 							"  pm.collectionVariables.set(\"id_token\", responseJson.id_token);",
 							"  pm.collectionVariables.set(\"access_token\", responseJson.access_token);",
@@ -359,7 +359,7 @@
 							"  pm.expect(responseJson.access_token).to.be.not.empty;",
 							"  pm.expect(responseJson.refresh_token).to.be.not.empty;",
 							"  pm.expect(responseJson.id_token).to.be.not.empty;",
-							"  pm.expect(responseJson.expires_in).to.eql(3600);",
+							"  pm.expect(responseJson.expires_in).to.eql(300);",
 							"",
 							"  pm.collectionVariables.set(\"id_token\", responseJson.id_token);",
 							"  pm.collectionVariables.set(\"access_token\", responseJson.access_token);",
