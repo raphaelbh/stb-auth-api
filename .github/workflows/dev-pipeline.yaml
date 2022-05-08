@@ -54,7 +54,7 @@ jobs:
         run: |
           sam deploy --no-confirm-changeset \
           --no-fail-on-empty-changeset \
-          --s3-bucket stb-deployment \
+          --s3-bucket stb-authentication-deployment \
           --stack-name stb-authentication-dev \
           --parameter-overrides Stage=dev \
           --capabilities CAPABILITY_IAM \
