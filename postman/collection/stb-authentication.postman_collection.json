@@ -36,12 +36,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/signup",
+					"raw": "{{host}}/users",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"signup"
+						"users"
 					]
 				}
 			},
@@ -84,12 +84,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/signup",
+					"raw": "{{host}}/users",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"signup"
+						"users"
 					]
 				}
 			},
@@ -123,12 +123,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/signup",
+					"raw": "{{host}}/users",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"signup"
+						"users"
 					]
 				}
 			},
@@ -171,11 +171,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{host}}/login",
+					"raw": "{{host}}/users/login",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
+						"users",
 						"login"
 					]
 				}
@@ -201,12 +202,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{host}}/delete",
+					"raw": "{{host}}/users",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"delete"
+						"users"
 					]
 				}
 			},
@@ -242,12 +243,12 @@
 					}
 				],
 				"url": {
-					"raw": "{{host}}/delete",
+					"raw": "{{host}}/users",
 					"host": [
 						"{{host}}"
 					],
 					"path": [
-						"delete"
+						"users"
 					]
 				}
 			},
