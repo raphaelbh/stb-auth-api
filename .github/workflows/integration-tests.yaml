@@ -23,4 +23,5 @@ jobs:
         run: |
           newman run postman/collection/stb-authentication.postman_collection.json \
           -e postman/environment/development.postman_environment.json \
-          --env-var "api_key=${{ secrets.AWS_API_KEY_DEV }}"
+          --env-var "api_key=${{ secrets.AWS_API_KEY_DEV }}" \
+          --env-var "host=${{ secrets.AWS_API_HOST_DEV }}"
