@@ -35,7 +35,7 @@ jobs:
           pip install pytest-cov
           pip install -r tests/requirements.txt
           export PYTHONPATH=application
-          pytest --cache-clear --cov-fail-under=90 --cov=application tests/unit
+          pytest --cache-clear --cov-fail-under=90 --cov=application tests/
       
       - name: Setup sam client
         uses: aws-actions/setup-sam@v1
