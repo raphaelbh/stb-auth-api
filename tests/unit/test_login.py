@@ -11,7 +11,14 @@ class LoginTestCase(unittest.TestCase):
     def test_lambda_handler_success(self, mock_boto_client):
 
         mock_boto_client.return_value = mock_boto_client
-        mock_boto_client.initiate_auth.return_value = {}
+        mock_boto_client.initiate_auth.return_value = {
+            "AuthenticationResult": {
+                "AccessToken": "AccessToken",
+                "RefreshToken": "RefreshToken",
+                "IdToken": "IdToken",
+                "ExpiresIn": 3600
+            }
+        }
 
         body = json.dumps({
             "username": "raphaeldias.ti@gmail.com",
