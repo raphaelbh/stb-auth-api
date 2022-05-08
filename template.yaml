@@ -64,7 +64,6 @@ Resources:
             Limit: !Ref QuotaLimit
             Period: DAY
         Authorizers:
-          DefaultAuthorizer: CognitoAuthorizer
           CognitoAuthorizer:
             UserPoolArn: !GetAtt CognitoUserPool.Arn
 
