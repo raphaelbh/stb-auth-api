@@ -3,12 +3,9 @@ Transform: AWS::Serverless-2016-10-31
 Description: Authentication Application
 
 Parameters:
-  Project:
-    Type: String
-    Default: stb
   Application:
     Type: String
-    Default: authentication
+    Default: stb-authentication
   Stage:
     Type: String
     Default: dev
@@ -22,13 +19,13 @@ Resources:
   CognitoUserPool:
     Type: AWS::Cognito::UserPool
     Properties:
-      UserPoolName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
+      UserPoolName: !Join ["", [{"Ref": "Application"}, "-", {"Ref": "Stage"}]]
       UsernameAttributes:
         - email
   CognitoUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
     Properties:
-      ClientName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
+      ClientName: !Join ["", [{"Ref": "Application"}, "-", {"Ref": "Stage"}]]
       ExplicitAuthFlows:
         - ALLOW_USER_PASSWORD_AUTH
         - ALLOW_REFRESH_TOKEN_AUTH
@@ -38,12 +35,12 @@ Resources:
   AuthApiGateway:
     Type: AWS::Serverless::Api
     Properties:
-      Name: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
+      Name: !Join ["", [{"Ref": "Application"}, "-", {"Ref": "Stage"}]]
       StageName: !Ref Stage
       Auth:
         ApiKeyRequired: true
         UsagePlan:
-          UsagePlanName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", {"Ref": "Stage"}]]
+          UsagePlanName: !Join ["", [{"Ref": "Application"}, "-", {"Ref": "Stage"}]]
           CreateUsagePlan: PER_API
           Quota: 
             Limit: !Ref QuotaLimit
@@ -56,7 +53,7 @@ Resources:
   SignUpFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "signup", "-", {"Ref": "Stage"}]]
+      FunctionName: !Join ["", [{"Ref": "Application"}, "-", "signup", "-", {"Ref": "Stage"}]]
       CodeUri: application/signup
       Handler: app.lambda_handler
       Runtime: python3.9
@@ -83,7 +80,7 @@ Resources:
   LoginFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "login", "-", {"Ref": "Stage"}]]
+      FunctionName: !Join ["", [{"Ref": "Application"}, "-", "login", "-", {"Ref": "Stage"}]]
       CodeUri: application/login
       Handler: app.lambda_handler
       Runtime: python3.9
@@ -103,7 +100,7 @@ Resources:
   DeleteFunction:
     Type: AWS::Serverless::Function
     Properties:
-      FunctionName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "delete", "-", {"Ref": "Stage"}]]
+      FunctionName: !Join ["", [{"Ref": "Application"}, "-", "delete", "-", {"Ref": "Stage"}]]
       CodeUri: application/delete
       Handler: app.lambda_handler
       Runtime: python3.9
