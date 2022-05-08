@@ -2,33 +2,29 @@ import json
 import unittest
 
 from unittest.mock import patch
-from application.signup import app
+from application.login import app
 
 
-class MyTestCase(unittest.TestCase):
+class LoginTestCase(unittest.TestCase):
 
     @patch('boto3.client')
     def test_lambda_handler_success(self, mock_boto_client):
 
+        mock_boto_client.return_value = mock_boto_client
+        mock_boto_client.initiate_auth.return_value = {}
+
         body = json.dumps({
             "username": "raphaeldias.ti@gmail.com",
-            "password": "Mudar@123",
-            "attributes": [{
-                "Name": "name",
-                "Value": "Raphael Oliveira"
-            }, {
-                "Name": "email",
-                "Value": "raphaeldias.ti@gmail.com"
-            }]
+            "password": "Mudar@123"
         })
         apigw_event = {
             "body": body,
-            "resource": "/signup",
+            "resource": "/login",
             "httpMethod": "POST"
         }
 
         response = app.lambda_handler(apigw_event, "")
-        assert response["statusCode"] == 201
+        assert response["statusCode"] == 200
 
     @patch('boto3.client')
     def test_lambda_handler_error(self, mock_boto_client):
@@ -37,18 +33,11 @@ class MyTestCase(unittest.TestCase):
 
         body = json.dumps({
             "username": "raphaeldias.ti@gmail.com",
-            "password": "Mudar@123",
-            "attributes": [{
-                "Name": "name",
-                "Value": "Raphael Oliveira"
-            }, {
-                "Name": "email",
-                "Value": "raphaeldias.ti@gmail.com"
-            }]
+            "password": "Mudar@123"
         })
         apigw_event = {
             "body": body,
-            "resource": "/signup",
+            "resource": "/login",
             "httpMethod": "POST"
         }
 
