@@ -78,8 +78,6 @@ Resources:
             Method: post
             RestApiId:
               Ref: AuthApiGateway
-            Auth:
-              Authorizer: None
 
   # --- Login Function
   LoginFunction:
@@ -100,8 +98,6 @@ Resources:
             Method: post
             RestApiId:
               Ref: AuthApiGateway
-            Auth:
-              Authorizer: None
 
   # --- Delete Function
   DeleteFunction:
@@ -119,6 +115,8 @@ Resources:
             Method: delete
             RestApiId:
               Ref: AuthApiGateway
+            Auth:
+              Authorizer: CognitoAuthorizer
 
 Outputs:
   SignUpApi:
