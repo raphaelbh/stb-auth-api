@@ -49,6 +49,25 @@ Resources:
             Limit: !Ref QuotaLimit
             Period: DAY
 
+  # --- Auth Secure Api Gateway
+  AuthSecureApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-secure-", {"Ref": "Stage"}]]
+      StageName: !Ref Stage
+      Auth:
+        ApiKeyRequired: true
+        UsagePlan:
+          UsagePlanName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-secure-", {"Ref": "Stage"}]]
+          CreateUsagePlan: PER_API
+          Quota: 
+            Limit: !Ref QuotaLimit
+            Period: DAY
+        Authorizers:
+          DefaultAuthorizer: CognitoAuthorizer
+          CognitoAuthorizer:
+            UserPoolArn: !GetAtt CognitoUserPool.Arn
+
   # --- Sign Up Function
   SignUpFunction:
     Type: AWS::Serverless::Function
@@ -95,6 +114,23 @@ Resources:
             Method: post
             RestApiId:
               Ref: AuthApiGateway
+
+  # --- Delete Function
+  DeleteFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Join ["", [{"Ref": "Project"}, "-", {"Ref": "Application"}, "-", "delete", "-", {"Ref": "Stage"}]]
+      CodeUri: application/delete
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Events:
+        SignUpEvent:
+          Type: Api
+          Properties:
+            Path: /delete
+            Method: delete
+            RestApiId:
+              Ref: AuthSecureApiGateway
 
 Outputs:
   SignUpApi:
