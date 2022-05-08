@@ -74,7 +74,7 @@ Resources:
         SignUpEvent:
           Type: Api
           Properties:
-            Path: /signup
+            Path: /users
             Method: post
             RestApiId:
               Ref: AuthApiGateway
@@ -94,7 +94,7 @@ Resources:
         LoginEvent:
           Type: Api
           Properties:
-            Path: /login
+            Path: /users/login
             Method: post
             RestApiId:
               Ref: AuthApiGateway
@@ -111,7 +111,7 @@ Resources:
         SignUpEvent:
           Type: Api
           Properties:
-            Path: /delete
+            Path: /users
             Method: delete
             RestApiId:
               Ref: AuthApiGateway
