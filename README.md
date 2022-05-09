@@ -4,6 +4,7 @@
 
 Application responsible for providing security for the APIs of the STB project.
 
+**[update image]**
 ![resources](assets/images/resources.png)
 
 Features:
