@@ -21,7 +21,7 @@ jobs:
       
       - name: Run integration tests
         run: |
-          newman run postman/collection/stb-authentication.postman_collection.json \
+          newman run postman/collection/stb-authentication-integration-tests.postman_collection.json \
           --environment postman/environment/development.postman_environment.json \
           --env-var "api_key=${{ secrets.AWS_API_KEY_DEV }}" \
           --env-var "host=${{ secrets.AWS_API_HOST_DEV }}"
