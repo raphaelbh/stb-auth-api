@@ -26,7 +26,6 @@ Resources:
         - email
       EmailConfiguration:
         EmailSendingAccount: COGNITO_DEFAULT
-        From: Raphael Oliveira <raphaeldias.ti@gmail.com>
       VerificationMessageTemplate:
         DefaultEmailOption: CONFIRM_WITH_LINK
   CognitoUserPoolClient:
