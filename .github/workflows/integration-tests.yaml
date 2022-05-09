@@ -1,7 +1,6 @@
 name: Integration Tests
 
 on:
-  workflow_dispatch
   workflow_run:
     workflows: [Development Build and Deploy]
     types: [completed]
